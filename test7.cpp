@@ -11,7 +11,7 @@ using namespace std;
 const string GENES = "ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ";
 
 // Target string to be generated
-const string TARGET = "МИРМИР";
+const string TARGET = "МИР";
 
 // Function to generate random numbers in given range
 int random_num(int start, int end)
