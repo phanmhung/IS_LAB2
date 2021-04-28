@@ -8,8 +8,7 @@ using namespace std;
 #define POPULATION_SIZE 100
 
 // Valid Genes
-const string GENES = "ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ"\
-" 1234567890, .-;:_!\"#%&/()=?@${[]}";
+const string GENES = "ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ";
 
 // Target string to be generated
 const string TARGET = "МИРМИР";
