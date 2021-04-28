@@ -6,14 +6,14 @@ using namespace std;
 
 // Number of individuals in each generation
 #define POPULATION_SIZE 100
-#define MAX_ITERATION 200	// максимальное число итераций
+#define MAX_ITERATION 100	// максимальное число итераций
 #define CROSSOVER_PROB  0.7f        //Pc - вероятность кроссинговера
 #define MUTATION 0.1f   //вероятность мутации РМ
 // Valid Genes
 const string GENES = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
 
 // Target string to be generated
-const string TARGET = "Мы закроем ИС на пять";
+const string TARGET = "МИР";
 
 // Function to generate random numbers in given range
 int random_num(int start, int end)
@@ -48,7 +48,7 @@ public:
     string chromosome;
     int fitness;
     Individual(string chromosome);
-    Individual mate(Individual parent2);
+    Individual mutate();
     int cal_fitness();
 };
 
@@ -58,34 +58,14 @@ Individual::Individual(string chromosome)
     fitness = cal_fitness();
 };
 
-// Perform mating and produce new offspring
-Individual Individual::mate(Individual par2)
-{
-    // chromosome for offspring
+Individual Individual::mutate() {
     string child_chromosome = "";
-
     int len = chromosome.size();
-    int k = 0;
-    while(k<POPULATION_SIZE)
-    {
-        // random probability
-        float RANDOM = random_num(0, 100) / 100;
-        float i = RANDOM * POPULATION_SIZE;
-        
-        int spos = rand() % TARGET.size();
-        if (CROSSOVER_PROB > RANDOM) {
-            k += 2;
-            child_chromosome = chromosome.substr(0, spos) + par2.chromosome.substr(spos, TARGET.size() - spos);
-        }
-        else
-            child_chromosome += mutated_genes();
+    for (int i = 0; i < len; i++) {
+        child_chromosome += mutated_genes();
     }
-
-    // create new Individual(offspring) using
-    // generated chromosome for offspring
     return Individual(child_chromosome);
 };
-
 
 // Calculate fittness score, it is the number of
 // characters in string which differ from target
@@ -153,15 +133,31 @@ int main()
         // From 50% of fittest population, Individuals
         // will mate to produce offspring
         s = (90 * POPULATION_SIZE) / 100;
-        for (int i = 0; i < s; i++)
+        int k = 0;
+        while (k<s)
         {
             int len = population.size();
-            int r = random_num(0, 50);
-            Individual parent1 = population[r];
-            r = random_num(0, 50);
-            Individual parent2 = population[r];
-            Individual offspring = parent1.mate(parent2);
-            new_generation.push_back(offspring);
+            
+            int i = random_num(0, 99);
+            int j = random_num(0, 99);
+
+            Individual parent1 = population[i];
+            Individual parent2 = population[j];
+            Individual offspring1 = population[i], offspring2 = population[j];
+            if (CROSSOVER_PROB > (random_num(0, 100) / 100)) {
+                k += 2;
+                int spos = rand() % TARGET.size()+1;
+                offspring1 = parent1.chromosome.substr(0, spos) 
+                    + parent2.chromosome.substr(spos, TARGET.size() - spos);
+                offspring2 = parent2.chromosome.substr(0, spos)
+                    + parent1.chromosome.substr(spos, TARGET.size() - spos);
+            }
+            else {
+                offspring1= offspring1.mutate();
+                offspring2= offspring2.mutate();
+            }
+            new_generation.push_back(offspring1);
+            new_generation.push_back(offspring2);
         }
         population = new_generation;
         cout << "Generation: " << generation << "\t";
