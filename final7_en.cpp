@@ -6,7 +6,7 @@ using namespace std;
 
 //Основный параметры:
 #define MAX_ITERATION 1000	// длительность эволюции (количество поколений)
-#define POPULATION_SIZE 50 //размер популяции;
+#define POPULATION_SIZE 100 //размер популяции;
 #define CROSSOVER_PROB  0.5f   //Pc - вероятность кроссинговера
 #define MUTATIONRATE 0.1f   //вероятность мутации РМ
 #define GENERATION_GAP 0.8   //величина разрыва поколений Т
