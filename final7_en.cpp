@@ -5,7 +5,7 @@
 using namespace std;
 
 //Основный параметры:
-#define MAX_ITERATION 100	// длительность эволюции (количество поколений)
+#define MAX_ITERATION 1000	// длительность эволюции (количество поколений)
 #define POPULATION_SIZE 50 //размер популяции;
 #define CROSSOVER_PROB  0.5f   //Pc - вероятность кроссинговера
 #define MUTATIONRATE 0.1f   //вероятность мутации РМ
@@ -132,7 +132,7 @@ int main()
         population.push_back(Individual(gnome));
     }
 
-    while (!found || generation <MAX_ITERATION)
+    while (!found && generation <MAX_ITERATION)
     {
         // sort the population in increasing order of fitness score
         sort(population.begin(), population.end());
